@@ -436,13 +436,6 @@ The following visualizations were generated during the analysis.
 
 ---
 
-### Cluster Distribution
-
-```markdown
-![Cluster Distribution](images/cluster_distribution.png)
-```
-
----
 
 # 📦 Project Dependencies
 
