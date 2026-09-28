@@ -1,4 +1,0 @@
-column_name,before_low,before_high,original_lower_bound,original_upper_bound,treatment,after_low_retained,after_high,feature,before_outliers_below_lower_bound,before_outliers_above_upper_bound,after_outliers_below_lower_bound,after_outliers_above_upper_bound,outliers_removed,rows_removed,status
-avg_session_duration_min,0.0,1572.0,-9.93,34.07,upper IQR cap + log1p,341.0,0.0,,,,,,,,
-daily_active_minutes,0.0,181.0,-8.535000000000004,98.625,upper IQR cap + log1p,2543.0,0.0,,,,,,,,
-,,,-22.0,66.0,no transformation; retained as valid recency behavior,,,days_since_last_login,0.0,0.0,0.0,0.0,0.0,0.0,retained unchanged
