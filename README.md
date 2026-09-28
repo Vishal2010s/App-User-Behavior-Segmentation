@@ -1,487 +1,245 @@
-# 📱 App User Behavior Segmentation Using Unsupervised Machine Learning
+App User Behavior Segmentation
+A K-Means segmentation project with a Streamlit dashboard for exploring mobile-app usage, identifying inactive users, and planning segment-specific actions.
 
----
+The current analysis covers 50,000 users, uses three behavioral features, and produces four segments. The repository includes the analysis script, dashboard, exported CSV results, and a Word document containing dashboard screenshots.
 
-# 📌 Executive Summary
+Contents
+Repository structure
+Dataset and methodology
+Results and segment interpretation
+Dashboard features
+Dashboard screenshots
+Run the dashboard
+Regenerate the analysis
+CSV output reference
+Interpretation and limitations
+Author
+Repository structure
+Keep the scripts and dashboard document in the repository root, with the exported CSV files in results/. The folder name is plural because the scripts use that exact path.
 
-Understanding how users interact with a mobile application is essential for improving customer engagement, reducing churn, and delivering personalized experiences.
-
-This project applies **Unsupervised Machine Learning** to segment mobile application users into meaningful behavioral groups based on their usage patterns using K-Means clustering, enabling data-driven engagement, retention, and marketing strategies that a product / CRM team can act on.
-
-The project demonstrates a complete end-to-end Machine Learning workflow including:
-
-- Data Cleaning & Preprocessing
-- Exploratory Data Analysis (EDA)
-- Feature Engineering
-- Feature Scaling
-- K-Means Clustering
-- Cluster Evaluation (Elbow method, Silhouette Score, PCA Visualization)
-- Cluster Profiling
-- Business Recommendation Generation
-
-The final output provides actionable customer segments that can support product strategy, marketing personalization, and customer retention initiatives.
-
----
-
-# 🎯 Project Objectives
-
-The primary objectives of this project are:
-
-- Analyze user behavior using application interaction data.
-- Discover hidden behavioral patterns without labelled data.
-- Segment users into meaningful customer groups.
-- Evaluate clustering performance using multiple techniques.
-- Interpret clusters from a business perspective.
-- Recommend actionable strategies for each customer segment.
-
----
-
-# 📑 Table of Contents
-
-- [Executive Summary](#-executive-summary)
-- [Project Objectives](#-project-objectives)
-- [Business Problem](#-business-problem)
-- [Business Use Cases](#-business-use-cases)
-- [Dataset Overview](#-dataset-overview)
-- [Project Workflow](#-project-workflow)
-- [Project Architecture](#-project-architecture)
-- [Key Project Results & Cluster Profiling](#-Key-Project-Results--cluster-profiling)
-- [Business Insights](#-Business-Insights)
-- [Visualizations](#-visualizations)
-- [Author](#-author)
-
----
-
-# 💼 Business Problem
-
-Modern mobile applications collect millions of user interactions every day. While this data contains valuable information, organizations often struggle to identify meaningful behavioral patterns that can improve customer engagement and retention.
-
-Without effective segmentation:
-
-- Marketing campaigns become generic and less effective.
-- Customer churn increases due to untargeted engagement.
-- Product teams lack insights into feature adoption.
-- High-value users cannot be identified efficiently.
-- Customer experience remains largely one-size-fits-all.
-
-Machine Learning provides a scalable approach to automatically discover behavioral patterns and group users with similar characteristics. These insights enable organizations to make informed business decisions and deliver more personalized user experiences.
-
----
-
-# 🌟 Business Use Cases
-
-This project demonstrates how behavioral segmentation can support real-world business decisions.
-
-| Business Challenge | Machine Learning Solution | Expected Business Value |
-|--------------------|---------------------------|-------------------------|
-| High customer churn | Identify at-risk user segments | Improve customer retention |
-| Low user engagement | Behavioral clustering | Increase active user participation |
-| Generic marketing campaigns | Personalized customer groups | Higher campaign conversion rates |
-| Feature adoption analysis | Engagement-based segmentation | Better product roadmap decisions |
-| Customer loyalty | Identify highly engaged users | Reward valuable customers |
-| Product optimization | Analyze interaction patterns | Improve application usability |
-| Revenue growth | Personalized engagement strategies | Increase customer lifetime value |
-
----
-
-# 📊 Dataset Overview
-
-The project uses a mobile application user behavior dataset containing demographic information, engagement metrics, session activity, interaction patterns, and customer behavioral indicators.
-
-### Dataset Highlights
-
-| Attribute | Description |
-|-----------|-------------|
-| Records | Approximately 50,000 users *(update if your dataset differs)* |
-| Features | Behavioral, demographic and engagement variables |
-| Problem Type | Unsupervised Machine Learning |
-| Target Variable | None |
-| Machine Learning Algorithm | K-Means Clustering |
-| Dimensionality Reduction | Principal Component Analysis (PCA) |
-
-### Key Feature Categories
-
-#### 👤 User Information
-
-- Age
-- Gender
-- Device Type
-
-#### 📱 User Activity
-
-- Session Duration
-- Sessions Per Week
-- Daily Active Minutes
-
-#### 🔔 User Engagement
-
-- Feature Clicks
-- Notification Opens
-- In-App Searches
-
-#### 📈 Business Metrics
-
-- Engagement Score
-- Churn Risk Score
-- Account Age
-- Days Since Last Login
-
----
-
-
-# 🔄 Project Workflow
-
-The project follows a structured Machine Learning pipeline to transform raw user behavior data into meaningful customer segments.
-
-```text
-                     Raw Dataset
-                          │
-                          ▼
-             Data Understanding & Validation
-                          │
-                          ▼
-              Data Cleaning & Preprocessing
-                          │
-                          ▼
-            Missing Value & Outlier Handling
-                          │
-                          ▼
-              Exploratory Data Analysis (EDA)
-                          │
-                          ▼
-          Feature Engineering & Feature Selection
-                          │
-                          ▼
-          Encoding & Data Standardization
-                    (StandardScaler)
-                          │
-                          ▼
-        Dimensionality Reduction (PCA)
-                          │
-                          ▼
-        K-Means Clustering Algorithm
-                          │
-                          ▼
-     Elbow Method & Silhouette Evaluation
-                          │
-                          ▼
-         Cluster Profiling & Interpretation
-                          │
-                          ▼
-        Business Recommendations & Insights
-```
-
----
-
-# 🏗 Project Architecture
-
-The repository has been organized using a modular architecture to improve readability, maintainability, and code reusability.
-
-```text
 App-User-Behavior-Segmentation/
-│
-├── data/
-│   ├── raw/
-│   └── processed/
-│
-├── images/
-│
-├── notebooks/
-│   └── App_User_Behavior_Segmentation.ipynb
-│
-├── reports/
-│   └── figures/
-│
-├── src/
-│   ├── __init__.py
-│   ├── config.py
-│   ├── preprocessing.py
-│   ├── feature_engineering.py
-│   ├── clustering.py
-│   └── visualization.py
-│
 ├── README.md
-├── requirements.txt
-└── .gitignore
-```
+├── Masterfile_final.py
+├── Dashboard.py
+├── Dashboard output.docx
+├── images/                         # Dashboard screenshots used below
+└── results/
+    ├── users_with_clusters.csv
+    ├── cluster_profile.csv
+    ├── cluster_metrics.csv
+    ├── feature_set_comparison.csv
+    ├── pca_modeling_comparison.csv
+    ├── final_k4_stability.csv
+    ├── pca_loadings.csv
+    ├── df1_scaled.csv
+    ├── feature_health.csv
+    ├── initial_outlier_report.csv
+    ├── outlier_treatment_report.csv
+    ├── cluster_0_High_Users(Active_Long-Visit_Users).csv
+    ├── cluster_1_Low_Users(Low-Usage_Users).csv
+    ├── cluster_2_Moderate_Users(Short-Session_Users).csv
+    └── cluster_3_Occasional_Users(Lapsed_Long-Session_Users).csv
+
+The original app_user_behavior_dataset.csv is required beside Masterfile_final.py only when rerunning the analysis. The dashboard can run directly from the exported results without the original dataset.
+
+View the dashboard screenshot document, analysis script, or dashboard script. The Word document is a static record; run Streamlit to use filters and downloads.
+
+Dataset and methodology
+The original dataset contains 50,000 rows and 25 columns, with one unique user_id per row. It includes demographics, device and subscription information, session activity, feature interactions, login recency, engagement scores, and churn-risk scores.
+
+Final clustering inputs
+Feature	Role
+avg_session_duration_min	Session duration
+daily_active_minutes	Reported daily usage
+days_since_last_login	Login recency
+Other columns support profiling, filtering, and interpretation. Engagement and churn-risk scores are not inputs to the final three-feature model.
+
+Processing workflow
+Validate that user IDs are complete and unique; inspect missing values and numerical outliers.
+Fill missing rating_given values with the median. Rating is not a final clustering input.
+Preserve a reporting copy in original units before transforming model inputs.
+Apply upper IQR capping followed by log1p to session duration and daily active minutes. Valid low and zero values are retained.
+Standardize the selected features with StandardScaler.
+Compare feature sets using K-Means at k=4, then assess cluster counts using inertia, sampled silhouette, and cluster sizes.
+Fit the final K-Means model with k=4, random_state=42, and n_init=10.
+Assign descriptive labels from observed cluster profiles and export user-level and aggregate results.
+Use PCA to visualize the selected feature space and Streamlit to explore the results.
+The final model is trained on the three standardized behavioral features. PCA is also examined as a modeling alternative; the two-dimensional plot is a visualization of the final clusters.
+
+Results and segment interpretation
+The following values come from the included results, before dashboard filters are applied. Session duration and daily activity are in minutes; login gap is in days.
+
+Segment	Users	Session duration	Daily activity	Login gap	Inactive 30+ days
+High Users(Active Long-Visit Users)	16,572	16.43	49.37	10.28	0.00%
+Low Users(Low-Usage Users)	5,598	13.05	12.76	21.71	29.99%
+Moderate Users(Short-Session Users)	11,717	4.34	48.81	22.00	28.43%
+Occasional Users(Lapsed Long-Session Users)	16,113	16.22	49.44	34.27	72.53%
+Inactivity percentages are calculated from users_with_clusters.csv; the other profile values come from cluster_profile.csv. Overall, 33.39% of users have a login gap of at least 30 days.
+
+Suggested business actions
+Segment	Observed distinction	Proposed action
+High Users(Active Long-Visit Users)	More recent logins and longer sessions relative to the short-session segment	Test personalized recommendations, advanced features, and loyalty benefits
+Low Users(Low-Usage Users)	Lowest reported daily usage	Test simpler onboarding and relevant reminders
+Moderate Users(Short-Session Users)	Shortest sessions	Improve early-session usefulness and content discovery
+Occasional Users(Lapsed Long-Session Users)	Longest login gap despite comparatively long sessions	Prioritize a measured reactivation campaign
+These are proposed actions, not measured campaign outcomes. The combined labels are retained as explanatory references. Cluster numbers are model identifiers: the master script derives label assignments dynamically from cluster profiles, and its PCA legend follows cluster_data.
+
+Model evidence
+Input at k=4	Sampled silhouette
+11 behavioral features	0.0692
+6 behavioral features	0.1307
+4 core features	0.2078
+Final 3 core features	0.2901
+Final core after PCA retaining at least 90% variance	0.2901
+The three-feature solution has the highest silhouette among the tested direct feature sets. It also has the highest sampled silhouette among the tested cluster counts from 2 to 10, although the difference from k=3 (0.2882) is small. Selection of four clusters combines this evidence with interpretability; it does not establish a universally optimal segmentation.
+
+Silhouette scores use a 5,000-user sample with random_state=42. The two-component PCA projection retains 66.88% of variance. The supplementary PCA comparison reports a silhouette of 0.3188 in that reduced space, but this uses a different distance space and omits about one-third of the variance. Retaining at least 90% requires all three components.
+
+Dashboard features
+The sidebar filters users by segment, country, device, subscription type, and age. Overview and segment KPIs recalculate from the selected population. An empty selection displays a message instead of continuing calculations.
+
+Overview KPI cards
+Users and their share of all users
+Number of selected segments
+Average sessions per week
+Average daily active time
+Average days since login
+Inactive users with a login gap of 30+ days (%)
+Dashboard tabs
+Tab	Contents
+Executive overview	Segment sizes, behavioral comparisons, and business opportunity cards
+Segment explorer	Selected-segment KPIs, comparison with selected-user averages, recommendations, and subscription/device/marketing-source breakdowns
+Strategy center	Segment objectives, proposed actions, monitoring suggestions, and a campaign planning table
+Customer lookup	User-ID search, individual profiles, and selected-user CSV export
+Model evidence	PCA scatter plot, cluster count, silhouette, smallest segment, inertia/silhouette comparison, and feature-set results
+The Segment Explorer has five cards: Users, Session duration, Daily activity, Login gap, and Inactive users (30+ days). Engagement and churn-risk scores remain in supporting comparisons and customer details, but have been removed from the headline KPI cards because their segment averages differ little in the current results.
 
-### Module Responsibilities
+Business opportunity headings use blue for High, amber for Low, purple for Moderate, and red for Occasional users in the current dashboard code.
 
-| Module | Responsibility |
-|---------|----------------|
-| `config.py` | Stores project configurations and dataset paths |
-| `preprocessing.py` | Data loading, missing value treatment, outlier detection and preprocessing |
-| `feature_engineering.py` | Feature selection, encoding, correlation analysis and scaling |
-| `clustering.py` | PCA, K-Means clustering, evaluation and cluster profiling |
-| `visualization.py` | Visualizations including distribution plots, heatmaps and cluster plots |
+Inactivity definition
+Inactive users (%) =
+users with days_since_last_login >= 30
+÷ users with a known numeric login gap
+× 100
 
----
+The overview uses all filtered users; the Segment Explorer uses only the selected segment within those filters. Missing or nonnumeric login gaps are excluded, and a population with no valid login gaps displays N/A. Thirty days is an explicit dashboard threshold, not a confirmed churn label.
 
-# 📐 Feature Scaling
+Model-quality metrics remain global. The PCA display is filtered, but its coordinates are fitted on all users. Customer-ID lookup searches all users; the customer export follows the sidebar filters and previews up to 500 rows while downloading all matching rows.
 
-Machine Learning clustering algorithms are distance-based and therefore highly sensitive to differences in feature scales.
+Dashboard screenshots
+The screenshots below were captured in the supplied dashboard output document. They show a saved dashboard session; values in the live application change with filters. The business-opportunity screenshot predates the latest four-color heading update.
 
-To ensure equal contribution from every numerical feature, **StandardScaler** was applied.
+Executive overview
+The overview summarizes the selected population, inactivity, segment sizes, and behavioral differences.
 
-Benefits of scaling include:
+Executive overview with KPI cards, user segments, and behavioral comparison
 
-- Preventing high-range variables from dominating the clustering process.
-- Improving cluster separation.
-- Enhancing PCA performance.
-- Producing more stable K-Means results.
+Business opportunity cards
+Segment explorer
+Each segment view displays its own KPI cards and a comparison against the selected-user average.
 
----
+High Users(Active Long-Visit Users)
+High Users segment profile and behavioral comparison
 
-# 🧩 Dimensionality Reduction
+Subscription, device, and marketing-source breakdowns
+Low Users(Low-Usage Users)
+Low Users segment profile and behavioral comparison
 
-Before visualizing clusters, **Principal Component Analysis (PCA)** was applied to reduce the high-dimensional feature space into two principal components.
+Subscription, device, and marketing-source breakdowns
+Moderate Users(Short-Session Users)
+Moderate Users segment profile and behavioral comparison
 
-### Why PCA?
+Subscription, device, and marketing-source breakdowns
+Occasional Users(Lapsed Long-Session Users)
+Occasional Users segment profile and behavioral comparison
 
-- Simplifies visualization.
-- Removes redundant variance.
-- Preserves the majority of useful information.
-- Makes cluster separation easier to interpret.
+Subscription, device, and marketing-source breakdowns
+Customer lookup and export
+Customer lookup and selected-user export preview
 
-The resulting PCA projection provides a two-dimensional representation of user behavior while maintaining the overall clustering structure.
+Cluster visualization and model evidence
+The PCA chart displays the final cluster assignments in two dimensions. The evaluation panel presents the selected cluster count and comparison evidence.
 
----
-# 🤖 Unsupervised Machine Learning
+PCA scatter plot showing the four user segments
 
-## Why Unsupervised Learning?
+Model evidence with silhouette, cluster sizes, inertia, and feature-set comparison
 
-Unlike supervised learning problems, this project does not contain predefined target labels. The objective is to automatically discover hidden behavioral patterns among application users.
+Run the dashboard
+Open a terminal in the repository folder. A virtual environment is recommended.
 
-To achieve this, **K-Means Clustering** was selected due to its simplicity, scalability, and effectiveness in customer segmentation tasks.
+python -m venv .venv
 
----
+Activate it on Windows PowerShell:
 
-# 🎯 K-Means Clustering
+.\.venv\Scripts\Activate.ps1
 
-K-Means partitions observations into **K distinct clusters** by minimizing the distance between each data point and its assigned cluster centroid.
+Or on macOS/Linux:
 
-The algorithm follows these steps:
+source .venv/bin/activate
 
-1. Initialize K cluster centroids.
-2. Assign each observation to its nearest centroid.
-3. Recalculate centroid positions.
-4. Repeat until cluster assignments stabilize.
+Install the dashboard dependencies:
 
-The final output consists of groups of users exhibiting similar behavioral characteristics.
+python -m pip install "streamlit>=1.50,<2" "pandas>=2.0,<4" "numpy>=1.24,<3" "plotly>=5.18,<7" "scikit-learn>=1.3,<2"
 
----
+Ensure these five files are available in results/:
 
-# 📏 Determining the Optimal Number of Clusters
+users_with_clusters.csv
+cluster_profile.csv
+cluster_metrics.csv
+feature_set_comparison.csv
+pca_modeling_comparison.csv
 
-Selecting an appropriate number of clusters is one of the most important steps in unsupervised learning.
+The current loader reads all five files, including the PCA comparison CSV. Then start the app:
 
-This project evaluates multiple cluster sizes before selecting the final model.
+python -m streamlit run Dashboard.py
 
-## 1️⃣ Elbow Method
+Open the local URL printed in the terminal. Both scripts resolve data paths relative to their own location.
 
-The Elbow Method was used to compare the Within Cluster Sum of Squares (WCSS) across different values of **K**.
+Regenerate the analysis
+Place the original app_user_behavior_dataset.csv beside Masterfile_final.py.
 
-As the number of clusters increases, WCSS decreases. The optimal K is identified where adding additional clusters produces only marginal improvement.
+Install the dashboard dependencies above plus Matplotlib:
 
-**Purpose**
+python -m pip install matplotlib
 
-- Reduce model complexity
-- Avoid over-clustering
-- Select an optimal K value
+Address the existing optional profiling import before running. The current script contains from data_profiling import ProfileReport, although its report-generation calls are commented out. If that module is unavailable, remove or comment out this unused import. It is not required for clustering or the dashboard.
 
-> 📌 Replace the figure below with your generated Elbow Method plot.
+Run:
 
-```text
-images/
-└── elbow_method.png
-```
+python Masterfile_final.py
 
-```markdown
-![Elbow Method](images/elbow_method.png)
-```
+The script creates results/, writes the main CSV outputs, and displays analysis plots. Depending on the plotting backend, plot windows may need to be closed for execution to continue. It also produces a correlation heatmap HTML file, an elbow HTML file, and a scaling PNG; these are additional local artifacts beyond the CSV upload set.
 
----
+Reproducibility scope: the current master script does not write pca_modeling_comparison.csv, pca_loadings.csv, or final_k4_stability.csv. These are included supplementary exports. Keep them with the uploaded results, but do not assume rerunning the current master script refreshes them. If the input data or model changes, regenerate the supplementary analysis before treating those files as current evidence.
 
-## 3️⃣ PCA Validation
+Rerunning replaces matching per-cluster customer-list CSVs, so keep separate copies of any earlier results you want to retain.
 
-Since the original dataset contains many behavioral variables, **Principal Component Analysis (PCA)** was used to project the data into two dimensions for visualization.
+CSV output reference
+File in results/	Contents
+users_with_clusters.csv	All users with original-unit reporting fields, cluster IDs, labels, meanings, opportunities, actions, and priorities
+cluster_profile.csv	Segment sizes, business descriptions, priorities, and average profile measures
+cluster_metrics.csv	Inertia, cluster sizes, and sampled silhouette results across cluster counts
+feature_set_comparison.csv	Feature-set definitions, scaling checks, and model comparison scores
+df1_scaled.csv	Standardized final model inputs
+feature_health.csv	Numerical feature ranges, standard deviations, and distinct-value counts
+initial_outlier_report.csv	Initial IQR bounds and outlier counts
+outlier_treatment_report.csv	Treatment details and before/after outlier diagnostics
+cluster_<id>_<label>.csv	Four separate user lists for segment-level exploration or campaign planning
+pca_modeling_comparison.csv	Supplementary comparison of original and PCA-transformed model spaces
+pca_loadings.csv	Supplementary first-two-component PCA loadings
+final_k4_stability.csv	Supplementary adjusted Rand index comparisons across random seeds
+The supplied stability file reports adjusted Rand indices of approximately 0.987–1.000 against its reference clustering. This describes agreement across the recorded runs, not future user behavior or campaign effectiveness.
 
-PCA helps verify whether clusters are visually well separated.
+Interpretation and limitations
+This is unsupervised behavioral segmentation, not a trained churn prediction system. No accuracy, precision, recall, or F1 claim is made.
+Engagement-score means are around 65 and rounded churn-risk means are 0.50 across segments. Labels should be explained using duration, daily usage, and recency rather than claims of strong score separation.
+“High” does not establish high revenue or customer lifetime value. “Lapsed” describes current login recency; this snapshot does not demonstrate a historical decline.
+daily_active_minutes is used as supplied. The CSV lacks total_active_minutes, active_days, and observation_days, so average minutes per active day and per calendar day are not derived.
+The PCA scatter plot is a partial view of a three-dimensional model; overlap in two dimensions is expected.
+Model selection reflects the tested feature sets and settings. Capping choices, alternative algorithms, and future data may change the segments.
+Proposed retention, loyalty, and onboarding actions require evaluation through subsequent experiments. The project does not measure their business impact.
+Author
+Vishal S
+Machine Learning | Data Analytics | Python
 
-> 📌 Replace the figure below with your PCA visualization.
-
-```markdown
-![PCA Clusters](images/pca_clusters.png)
-```
-
----
-
-# 📊 Cluster Evaluation
-
-Because this project is an **Unsupervised Machine Learning** problem, traditional supervised evaluation metrics such as Accuracy, Precision, Recall, and F1-Score are not applicable.
-
-Instead, the clustering solution was evaluated using multiple complementary approaches.
-
-| Evaluation Technique | Purpose |
-|----------------------|----------|
-| Elbow Method | Determine optimal number of clusters |
-| PCA Visualization | Validate cluster separation visually |
-| Cluster Profiling | Interpret behavioral differences |
-| Business Validation | Assess practical usefulness of clusters |
-
-This combination provides both quantitative and qualitative confidence in the clustering results.
-
----
-
-# 👥 Cluster Profiling
-
-After clustering, each user segment was analyzed using behavioral metrics such as:
-
-- Engagement Score
-- Churn Risk Score
-- Session Duration
-- Sessions Per Week
-- Daily Active Minutes
-- Feature Usage
-- User Activity
-
-Each cluster was then assigned a meaningful business interpretation.
-
----
-
-# 🏆 Customer Personas
-
-| Cluster | Persona | Characteristics | Recommended Action |
-|----------|----------|-----------------|--------------------|
-| Cluster 0 | High Engagement Users | High activity, strong engagement, low churn | Loyalty programs, premium offerings |
-| Cluster 1 | Moderate Engagement Users | Regular activity with growth potential | Personalized recommendations and targeted promotions |
-| Cluster 2 | At-Risk Users | Low engagement, higher churn probability | Retention campaigns and proactive customer outreach |
-| Cluster 3 | Occasional Users | Infrequent usage and limited interaction | Re-engagement campaigns and awareness initiatives |
-
-> **Note:** Replace the persona descriptions if your final cluster characteristics differ.
-
----
-
-# 📈 Key Project Results
-
-The project successfully segmented application users into meaningful behavioral groups.
-
-### Key Outcomes
-
-- Successfully cleaned and prepared behavioral data for clustering.
-- Identified the optimal number of user segments using the Elbow Method and Silhouette Score.
-- Reduced feature dimensionality using PCA for improved visualization.
-- Generated meaningful user personas based on behavioral characteristics.
-- Produced actionable business recommendations for each identified segment.
-
----
-
-# 💡 Business Insights
-
-The resulting customer segments provide valuable insights that can support strategic decision-making.
-
-### Marketing
-
-- Deliver personalized marketing campaigns.
-- Improve campaign conversion rates.
-- Increase customer engagement.
-
-### Customer Retention
-
-- Identify users at risk of churn.
-- Launch targeted retention strategies.
-- Improve long-term customer loyalty.
-
-### Product Management
-
-- Understand feature adoption patterns.
-- Prioritize feature enhancements.
-- Improve overall user experience.
-
-### Business Strategy
-
-- Optimize customer segmentation.
-- Allocate marketing resources efficiently.
-- Increase Customer Lifetime Value (CLV).
-
----
-
-# 📊 Project Visualizations
-
-The following visualizations were generated during the analysis.
-
-## 📷 Sample Outputs
-
-### Correlation Heatmap
-
-```markdown
-![Heatmap](images/heatmap.png)
-```
-
----
-
-### PCA Cluster Visualization
-
-```markdown
-![PCA](images/pca_clusters.png)
-```
-
----
-
-### Elbow Method
-
-```markdown
-![Elbow](images/elbow_method.png)
-```
-
----
-
-
-# 📦 Project Dependencies
-
-The project was developed using the following Python libraries:
-
-| Library | Purpose |
-|----------|---------|
-| Pandas | Data manipulation and analysis |
-| NumPy | Numerical computing |
-| Scikit-learn | Machine Learning |
-| Matplotlib | Static visualizations |
-| Seaborn | Statistical visualization |
-| Plotly | Interactive visualizations |
-| SQLAlchemy | Database connectivity (if applicable) |
-| ydata-profiling | Automated exploratory data profiling |
-
-
----
-
-# 👨‍💻 Author
-
-## Vishal S
-
-**Machine Learning | Data Analytics | Python**
-
-I enjoy building data-driven solutions that transform raw data into meaningful business insights. This project demonstrates an end-to-end unsupervised machine learning workflow, from data preprocessing and exploratory analysis to customer segmentation and business recommendations.
-
-### Connect with Me
-
-**GitHub**
-
-https://github.com/Vishal2010s
-
-**LinkedIn**
-
-https://www.linkedin.com/in/vishal-s-60915216
-
----
-
-
-# ⭐ Support
-
-If you found this project useful or interesting:
-
-- ⭐ Star this repository.
-- 🍴 Fork it to explore or extend the workflow.
-- 💡 Share suggestions or improvements through GitHub Issues.
-
-Thank you for visiting this repository!
+GitHub · LinkedIn
