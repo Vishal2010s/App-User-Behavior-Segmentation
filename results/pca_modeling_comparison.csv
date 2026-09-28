@@ -1,0 +1,5 @@
+version,components,variance_retained_pct,silhouette
+Original standardized features,3,100.0,0.2901196404792652
+PCA 2 components,2,66.88213032698758,0.3188496408342764
+PCA 3 components,3,100.0,0.29011964047926525
+PCA >=90% variance,3,100.0,0.29011964047926525
