@@ -1,0 +1,12 @@
+pandas
+numpy
+matplotlib
+seaborn
+plotly
+scikit-learn
+# Optional: automated EDA report andPDF export of reports
+ydata-profiling
+pdfkit
+
+
+
